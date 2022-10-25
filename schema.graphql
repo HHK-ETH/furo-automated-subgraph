@@ -1,0 +1,12 @@
+type ExampleEntity @entity {
+  id: ID!
+  count: BigInt!
+  clone: Bytes! # address
+  amount: BigInt! # uint256
+}
+type FuroAutomatedAmountFactoryCreateFuroAutomated @entity {
+  id: ID!
+  clone: Bytes! # address
+  amount: BigInt! # uint256
+  data: Bytes! # bytes
+}

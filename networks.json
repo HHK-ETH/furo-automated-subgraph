@@ -1,0 +1,10 @@
+{
+  "goerli": {
+    "FuroAutomatedTimeFactory": {
+      "address": "0xfDb37D0B81Dd83c2a842E498913Ae968E3629360"
+    },
+    "FuroAutomatedAmountFactory": {
+      "address": "0xF51c779f635B5412e2A129a7fdD76409acEB3b18"
+    }
+  }
+}

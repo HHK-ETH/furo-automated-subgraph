@@ -1,0 +1,42 @@
+specVersion: 0.0.4
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: FuroAutomatedTimeFactory
+    network: goerli
+    source:
+      address: "0xfDb37D0B81Dd83c2a842E498913Ae968E3629360"
+      abi: FuroAutomatedTimeFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - CreateFuroAutomated
+      abis:
+        - name: FuroAutomatedTimeFactory
+          file: ./abis/FuroAutomatedTimeFactory.json
+      eventHandlers:
+        - event: CreateFuroAutomated(indexed address,uint256,bytes)
+          handler: handleCreateFuroAutomated
+      file: ./src/furo-automated-time-factory.ts
+  - kind: ethereum
+    name: FuroAutomatedAmountFactory
+    network: goerli
+    source:
+      address: "0xF51c779f635B5412e2A129a7fdD76409acEB3b18"
+      abi: FuroAutomatedAmountFactory
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FuroAutomatedAmountFactoryCreateFuroAutomated
+      abis:
+        - name: FuroAutomatedAmountFactory
+          file: ./abis/FuroAutomatedAmountFactory.json
+      eventHandlers:
+        - event: FuroAutomatedAmountFactoryCreateFuroAutomated(indexed address,uint256,bytes)
+          handler: handleFuroAutomatedAmountFactoryCreateFuroAutomated
+      file: ./src/furo-automated-amount-factory.ts
