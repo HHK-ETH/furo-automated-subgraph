@@ -1,12 +1,50 @@
-type ExampleEntity @entity {
-  id: ID!
-  count: BigInt!
-  clone: Bytes! # address
-  amount: BigInt! # uint256
+enum FuroAutomatedType {
+  AMOUNT
+  TIME
 }
-type FuroAutomatedAmountFactoryCreateFuroAutomated @entity {
+
+type Factory @entity {
   id: ID!
-  clone: Bytes! # address
-  amount: BigInt! # uint256
-  data: Bytes! # bytes
+  type: FuroAutomatedType!
+  bentobox: Bytes!
+  ops: Bytes!
+  furoVesting: Bytes!
+  furoStreaming: Bytes!
+  implementation: Bytes!
+  clones: [FuroAutomated!]! @derivedFrom(field: "factory")
+}
+
+type FuroAutomated @entity {
+  id: ID!
+  factory: Factory!
+  type: FuroAutomatedType!
+  furoId: BigInt!
+  owner: Bytes!
+  token: Bytes!
+  vesting: Boolean!
+  withdrawTo: Bytes!
+  toBentoBox: Boolean!
+  taskData: Bytes!
+  balance: BigInt!
+  tasksExecuted: [TaskExecuted!]! @derivedFrom(field: "furoAutomated")
+}
+
+type FuroAutomatedTime @entity {
+  id: ID!
+  furoAutomated: FuroAutomated!
+  withdrawPeriod: BigInt!
+  lastWihdraw: BigInt!
+}
+
+type FuroAutomatedAmount @entity {
+  id: ID!
+  furoAutomated: FuroAutomated!
+  minAmount: BigInt!
+}
+
+type TaskExecuted @entity {
+  id: ID!
+  fee: BigInt!
+  timestamp: BigInt!
+  furoAutomated: FuroAutomated!
 }

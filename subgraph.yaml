@@ -6,37 +6,68 @@ dataSources:
     name: FuroAutomatedTimeFactory
     network: goerli
     source:
-      address: "0xfDb37D0B81Dd83c2a842E498913Ae968E3629360"
+      address: '0xfDb37D0B81Dd83c2a842E498913Ae968E3629360'
       abi: FuroAutomatedTimeFactory
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - CreateFuroAutomated
+        - Factory
       abis:
         - name: FuroAutomatedTimeFactory
           file: ./abis/FuroAutomatedTimeFactory.json
       eventHandlers:
         - event: CreateFuroAutomated(indexed address,uint256,bytes)
-          handler: handleCreateFuroAutomated
-      file: ./src/furo-automated-time-factory.ts
+          handler: handleCreateFuroAutomatedTime
+      file: ./src/mapping.ts
   - kind: ethereum
     name: FuroAutomatedAmountFactory
     network: goerli
     source:
-      address: "0xF51c779f635B5412e2A129a7fdD76409acEB3b18"
+      address: '0xF51c779f635B5412e2A129a7fdD76409acEB3b18'
       abi: FuroAutomatedAmountFactory
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities:
-        - FuroAutomatedAmountFactoryCreateFuroAutomated
+        - Factory
       abis:
         - name: FuroAutomatedAmountFactory
           file: ./abis/FuroAutomatedAmountFactory.json
       eventHandlers:
-        - event: FuroAutomatedAmountFactoryCreateFuroAutomated(indexed address,uint256,bytes)
-          handler: handleFuroAutomatedAmountFactoryCreateFuroAutomated
-      file: ./src/furo-automated-amount-factory.ts
+        - event: CreateFuroAutomated(indexed address,uint256,bytes)
+          handler: handleCreateFuroAutomatedAmount
+      file: ./src/mapping.ts
+
+templates:
+  - kind: ethereum
+    name: FuroAutomated
+    network: goerli
+    source:
+      abi: FuroAutomated
+    mapping:
+      kind: ethereum
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities:
+        - FuroAutomated
+        - FuroAutomatedTime
+        - FuroAutomatedAmount
+        - TaskExecuted
+      abis:
+        - name: FuroAutomated
+          file: ./abis/FuroAutomated.json
+      eventHandlers:
+        - event: Fund(uint256)
+          handler: handleFund
+        - event: Withdraw(uint256)
+          handler: handleWithdraw
+        - event: TaskUpdate(bytes)
+          handler: handleTaskUpdate
+        - event: TaskCancel(bytes)
+          handler: handleTaskCancel
+        - event: TaskExecute(uint256)
+          handler: handleTaskExecute
+      file: ./src/mapping.ts
