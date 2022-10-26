@@ -27,8 +27,8 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
+        "name": "taskId",
+        "type": "bytes32"
       },
       {
         "indexed": false,

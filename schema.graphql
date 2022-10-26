@@ -26,6 +26,8 @@ type FuroAutomated @entity {
   toBentoBox: Boolean!
   taskData: Bytes!
   balance: BigInt!
+  taskId: Bytes!
+  active: Boolean!
   tasksExecuted: [TaskExecuted!]! @derivedFrom(field: "furoAutomated")
 }
 

@@ -18,7 +18,7 @@ dataSources:
         - name: FuroAutomatedTimeFactory
           file: ./abis/FuroAutomatedTimeFactory.json
       eventHandlers:
-        - event: CreateFuroAutomated(indexed address,uint256,bytes)
+        - event: CreateFuroAutomated(indexed address,bytes32,bytes)
           handler: handleCreateFuroAutomatedTime
       file: ./src/mapping.ts
   - kind: ethereum
@@ -37,7 +37,7 @@ dataSources:
         - name: FuroAutomatedAmountFactory
           file: ./abis/FuroAutomatedAmountFactory.json
       eventHandlers:
-        - event: CreateFuroAutomated(indexed address,uint256,bytes)
+        - event: CreateFuroAutomated(indexed address,bytes32,bytes)
           handler: handleCreateFuroAutomatedAmount
       file: ./src/mapping.ts
 
