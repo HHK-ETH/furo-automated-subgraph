@@ -1,4 +1,4 @@
-import { BigInt, ethereum } from '@graphprotocol/graph-ts';
+import { BigInt, ethereum, log } from '@graphprotocol/graph-ts';
 import { CreateFuroAutomated } from '../../generated/FuroAutomatedTimeFactory/FuroAutomatedTimeFactory';
 import { FuroAutomated, FuroAutomatedAmount, FuroAutomatedTime } from '../../generated/schema';
 import { getOrCreateFactory } from './factory';
@@ -28,6 +28,7 @@ export function createFuroAutomatedTime(event: CreateFuroAutomated): FuroAutomat
   const data = ethereum.decode('(uint256, address, address, uint32, bool, bool, bytes)', event.params.data);
   if (!data) throw 'Unable to decode data.';
   const decodedData = data.toTuple();
+  log.debug('{}', [decodedData.toString()]);
 
   let furoAutomatedTime = new FuroAutomatedTime(event.params.clone.toHex());
   furoAutomatedTime.furoAutomated = createFuroAutomated(event, decodedData, 'TIME').id;
