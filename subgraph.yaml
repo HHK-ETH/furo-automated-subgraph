@@ -20,7 +20,7 @@ dataSources:
       eventHandlers:
         - event: CreateFuroAutomated(indexed address,bytes32,bytes)
           handler: handleCreateFuroAutomatedTime
-      file: ./src/mapping.ts
+      file: ./src/mappings/furoAutomated.ts
   - kind: ethereum
     name: FuroAutomatedAmountFactory
     network: goerli
@@ -39,7 +39,7 @@ dataSources:
       eventHandlers:
         - event: CreateFuroAutomated(indexed address,bytes32,bytes)
           handler: handleCreateFuroAutomatedAmount
-      file: ./src/mapping.ts
+      file: ./src/mappings/furoAutomated.ts
 
 templates:
   - kind: ethereum
@@ -70,4 +70,4 @@ templates:
           handler: handleTaskCancel
         - event: TaskExecute(uint256)
           handler: handleTaskExecute
-      file: ./src/mapping.ts
+      file: ./src/mappings/furoAutomated.ts
