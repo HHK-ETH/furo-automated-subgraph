@@ -1,7 +1,6 @@
 import { BigInt, ethereum } from '@graphprotocol/graph-ts';
 import { FuroAutomatedAmount, FuroAutomatedTime, FuroAutomated } from '../../generated/schema';
-import { CreateFuroAutomated as CreateFuroAutomatedTime } from '../../generated/FuroAutomatedTimeFactory/FuroAutomatedTimeFactory';
-import { CreateFuroAutomated as CreateFuroAutomatedAmount } from '../../generated/FuroAutomatedAmountFactory/FuroAutomatedAmountFactory';
+import { CreateFuroAutomated } from '../../generated/FuroAutomatedTimeFactory/FuroAutomatedTimeFactory';
 import {
   Fund,
   Withdraw,
@@ -12,11 +11,11 @@ import {
 import { createFuroAutomatedAmount, createFuroAutomatedTime } from '../functions/furoAutomated';
 import { createTaskExecuted } from '../functions/taskExecuted';
 
-export function handleCreateFuroAutomatedTime(event: CreateFuroAutomatedTime): void {
+export function handleCreateFuroAutomatedTime(event: CreateFuroAutomated): void {
   createFuroAutomatedTime(event);
 }
 
-export function handleCreateFuroAutomatedAmount(event: CreateFuroAutomatedAmount): void {
+export function handleCreateFuroAutomatedAmount(event: CreateFuroAutomated): void {
   createFuroAutomatedAmount(event);
 }
 
@@ -47,31 +46,33 @@ export function handleTaskUpdate(event: TaskUpdate): void {
   }
 
   if (furoAutomated.type === 'TIME') {
-    const data = ethereum.decode('(address, uint32, bool, bytes)', event.params.data)?.toTuple();
+    const data = ethereum.decode('(address, uint32, bool, bytes)', event.params.data);
     if (!data) throw 'Unable to decode data.';
-    furoAutomated.withdrawTo = data[0].toAddress();
-    furoAutomated.toBentoBox = data[2].toBoolean();
-    furoAutomated.taskData = data[3].toBytes();
+    const dataTuple = data.toTuple();
+    furoAutomated.withdrawTo = dataTuple[0].toAddress();
+    furoAutomated.toBentoBox = dataTuple[2].toBoolean();
+    furoAutomated.taskData = dataTuple[3].toBytes();
     furoAutomated.save();
 
     let furoAutomatedTime = FuroAutomatedTime.load(event.address.toHex());
     if (furoAutomatedTime !== null) {
-      furoAutomatedTime.withdrawPeriod = data[1].toBigInt();
+      furoAutomatedTime.withdrawPeriod = dataTuple[1].toBigInt();
       furoAutomatedTime.save();
     }
     return;
   }
   if (furoAutomated.type === 'AMOUNT') {
-    const data = ethereum.decode('(address, uint256, bool, bytes)', event.params.data)?.toTuple();
+    const data = ethereum.decode('(address, uint256, bool, bytes)', event.params.data);
     if (!data) throw 'Unable to decode data.';
-    furoAutomated.withdrawTo = data[0].toAddress();
-    furoAutomated.toBentoBox = data[2].toBoolean();
-    furoAutomated.taskData = data[3].toBytes();
+    const dataTuple = data.toTuple();
+    furoAutomated.withdrawTo = dataTuple[0].toAddress();
+    furoAutomated.toBentoBox = dataTuple[2].toBoolean();
+    furoAutomated.taskData = dataTuple[3].toBytes();
     furoAutomated.save();
 
     let furoAutomatedAmount = FuroAutomatedAmount.load(event.address.toHex());
     if (furoAutomatedAmount !== null) {
-      furoAutomatedAmount.minAmount = data[1].toBigInt();
+      furoAutomatedAmount.minAmount = dataTuple[1].toBigInt();
       furoAutomatedAmount.save();
     }
     return;

@@ -1,0 +1,108 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_bentoBox",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_furoStream",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_furoVesting",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_gelatoOps",
+        "type": "address"
+      },
+      {
+        "internalType": "address payable",
+        "name": "_implementation",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "CreateFail",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "contract BaseFuroAutomated",
+        "name": "clone",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "taskId",
+        "type": "bytes32"
+      },
+      {
+        "indexed": false,
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "CreateFuroAutomated",
+    "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes",
+        "name": "data",
+        "type": "bytes"
+      }
+    ],
+    "name": "createFuroAutomated",
+    "outputs": [
+      {
+        "internalType": "contract BaseFuroAutomated",
+        "name": "furoAutomated",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "implementation",
+    "outputs": [
+      {
+        "internalType": "contract BaseFuroAutomated",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "ops",
+    "outputs": [
+      {
+        "internalType": "contract IOps",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
