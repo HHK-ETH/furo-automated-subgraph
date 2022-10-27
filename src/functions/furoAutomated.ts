@@ -10,9 +10,9 @@ function createFuroAutomated(
   data: FuroAutomatedCreationParams,
   type: string
 ): FuroAutomated {
-  const factory = getOrCreateFactory(event.address.toString(), type);
+  const factory = getOrCreateFactory(event.address.toHex(), type);
 
-  let furoAutomated = new FuroAutomated(event.params.clone.toString());
+  let furoAutomated = new FuroAutomated(event.params.clone.toHex());
   furoAutomated.factory = factory.id;
   furoAutomated.type = type;
   furoAutomated.furoId = data.furoId;
@@ -56,7 +56,7 @@ function parseAmountOrTimeCreationData(
 export function createFuroAutomatedTime(event: CreateFuroAutomatedTime): FuroAutomatedTime {
   const { furoAutomatedParams, extraParam } = parseAmountOrTimeCreationData(event.params.data, 'TIME');
 
-  let furoAutomatedTime = new FuroAutomatedTime(event.params.clone.toString());
+  let furoAutomatedTime = new FuroAutomatedTime(event.params.clone.toHex());
   furoAutomatedTime.furoAutomated = createFuroAutomated(event, furoAutomatedParams, 'TIME').id;
   furoAutomatedTime.withdrawPeriod = extraParam.toBigInt();
   furoAutomatedTime.lastWihdraw = BigInt.fromU32(0);
@@ -68,7 +68,7 @@ export function createFuroAutomatedTime(event: CreateFuroAutomatedTime): FuroAut
 export function createFuroAutomatedAmount(event: CreateFuroAutomatedAmount): FuroAutomatedAmount {
   const { furoAutomatedParams, extraParam } = parseAmountOrTimeCreationData(event.params.data, 'AMOUNT');
 
-  let furoAutomatedAmount = new FuroAutomatedAmount(event.params.clone.toString());
+  let furoAutomatedAmount = new FuroAutomatedAmount(event.params.clone.toHex());
   furoAutomatedAmount.furoAutomated = createFuroAutomated(event, furoAutomatedParams, 'AMOUNT').id;
   furoAutomatedAmount.minAmount = extraParam.toBigInt();
   furoAutomatedAmount.save();

@@ -21,7 +21,7 @@ export function handleCreateFuroAutomatedAmount(event: CreateFuroAutomatedAmount
 }
 
 export function handleFund(event: Fund) {
-  let furoAutomated = FuroAutomated.load(event.address.toString());
+  let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
   }
@@ -31,7 +31,7 @@ export function handleFund(event: Fund) {
 }
 
 export function handleWithdraw(event: Withdraw) {
-  let furoAutomated = FuroAutomated.load(event.address.toString());
+  let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
   }
@@ -41,7 +41,7 @@ export function handleWithdraw(event: Withdraw) {
 }
 
 export function handleTaskUpdate(event: TaskUpdate) {
-  let furoAutomated = FuroAutomated.load(event.address.toString());
+  let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
   }
@@ -54,7 +54,7 @@ export function handleTaskUpdate(event: TaskUpdate) {
     furoAutomated.taskData = data[3].toBytes();
     furoAutomated.save();
 
-    let furoAutomatedTime = FuroAutomatedTime.load(event.address.toString());
+    let furoAutomatedTime = FuroAutomatedTime.load(event.address.toHex());
     if (furoAutomatedTime !== null) {
       furoAutomatedTime.withdrawPeriod = data[1].toBigInt();
       furoAutomatedTime.save();
@@ -69,7 +69,7 @@ export function handleTaskUpdate(event: TaskUpdate) {
     furoAutomated.taskData = data[3].toBytes();
     furoAutomated.save();
 
-    let furoAutomatedAmount = FuroAutomatedAmount.load(event.address.toString());
+    let furoAutomatedAmount = FuroAutomatedAmount.load(event.address.toHex());
     if (furoAutomatedAmount !== null) {
       furoAutomatedAmount.minAmount = data[1].toBigInt();
       furoAutomatedAmount.save();
@@ -79,7 +79,7 @@ export function handleTaskUpdate(event: TaskUpdate) {
 }
 
 export function handleTaskCancel(event: TaskCancel) {
-  let furoAutomated = FuroAutomated.load(event.address.toString());
+  let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
   }
@@ -90,7 +90,7 @@ export function handleTaskCancel(event: TaskCancel) {
 }
 
 export function handleTaskExecute(event: TaskExecute) {
-  let furoAutomated = FuroAutomated.load(event.address.toString());
+  let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
   }
