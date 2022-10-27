@@ -1,26 +1,26 @@
 import { BigInt, ethereum } from '@graphprotocol/graph-ts';
-import { FuroAutomatedAmount, FuroAutomatedTime, FuroAutomated, TaskExecuted } from './../../generated/schema';
-import { CreateFuroAutomated as CreateFuroAutomatedTime } from './../../generated/FuroAutomatedTimeFactory/FuroAutomatedTimeFactory';
-import { CreateFuroAutomated as CreateFuroAutomatedAmount } from './../../generated/FuroAutomatedAmountFactory/FuroAutomatedAmountFactory';
+import { FuroAutomatedAmount, FuroAutomatedTime, FuroAutomated } from '../../generated/schema';
+import { CreateFuroAutomated as CreateFuroAutomatedTime } from '../../generated/FuroAutomatedTimeFactory/FuroAutomatedTimeFactory';
+import { CreateFuroAutomated as CreateFuroAutomatedAmount } from '../../generated/FuroAutomatedAmountFactory/FuroAutomatedAmountFactory';
 import {
   Fund,
   Withdraw,
   TaskUpdate,
   TaskCancel,
   TaskExecute
-} from './../../generated/templates/FuroAutomated/FuroAutomated';
+} from '../../generated/templates/FuroAutomated/FuroAutomated';
 import { createFuroAutomatedAmount, createFuroAutomatedTime } from '../functions/furoAutomated';
 import { createTaskExecuted } from '../functions/taskExecuted';
 
-export function handleCreateFuroAutomatedTime(event: CreateFuroAutomatedTime) {
+export function handleCreateFuroAutomatedTime(event: CreateFuroAutomatedTime): void {
   createFuroAutomatedTime(event);
 }
 
-export function handleCreateFuroAutomatedAmount(event: CreateFuroAutomatedAmount) {
+export function handleCreateFuroAutomatedAmount(event: CreateFuroAutomatedAmount): void {
   createFuroAutomatedAmount(event);
 }
 
-export function handleFund(event: Fund) {
+export function handleFund(event: Fund): void {
   let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
@@ -30,7 +30,7 @@ export function handleFund(event: Fund) {
   furoAutomated.save();
 }
 
-export function handleWithdraw(event: Withdraw) {
+export function handleWithdraw(event: Withdraw): void {
   let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
@@ -40,7 +40,7 @@ export function handleWithdraw(event: Withdraw) {
   furoAutomated.save();
 }
 
-export function handleTaskUpdate(event: TaskUpdate) {
+export function handleTaskUpdate(event: TaskUpdate): void {
   let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
@@ -78,7 +78,7 @@ export function handleTaskUpdate(event: TaskUpdate) {
   }
 }
 
-export function handleTaskCancel(event: TaskCancel) {
+export function handleTaskCancel(event: TaskCancel): void {
   let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
@@ -89,7 +89,7 @@ export function handleTaskCancel(event: TaskCancel) {
   furoAutomated.save();
 }
 
-export function handleTaskExecute(event: TaskExecute) {
+export function handleTaskExecute(event: TaskExecute): void {
   let furoAutomated = FuroAutomated.load(event.address.toHex());
   if (furoAutomated === null) {
     return;
