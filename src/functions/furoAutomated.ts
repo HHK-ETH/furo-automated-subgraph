@@ -1,11 +1,14 @@
 import { Address, BigInt, Bytes, ethereum } from '@graphprotocol/graph-ts';
 import { CreateFuroAutomated } from '../../generated/FuroAutomatedTimeFactory/FuroAutomatedTimeFactory';
 import { FuroAutomated, FuroAutomatedAmount, FuroAutomatedTime } from '../../generated/schema';
+import { AutomationType } from '../constants';
+import { FuroAutomated as FuroTemplate } from './../../generated/templates';
 import { getOrCreateFactory } from './factory';
 
 function createFuroAutomated(event: CreateFuroAutomated, data: ethereum.Tuple, type: string): FuroAutomated {
   const factory = getOrCreateFactory(event.address.toHex(), type);
 
+  FuroTemplate.create(event.params.clone);
   let furoAutomated = new FuroAutomated(event.params.clone.toHex());
   furoAutomated.factory = factory.id;
   furoAutomated.type = type;
@@ -30,7 +33,7 @@ export function createFuroAutomatedTime(event: CreateFuroAutomated): FuroAutomat
   const decodedData = data.toTuple();
 
   let furoAutomatedTime = new FuroAutomatedTime(event.params.clone.toHex());
-  furoAutomatedTime.furoAutomated = createFuroAutomated(event, decodedData, 'TIME').id;
+  furoAutomatedTime.furoAutomated = createFuroAutomated(event, decodedData, AutomationType.TIME).id;
   furoAutomatedTime.withdrawPeriod = decodedData[3].toBigInt();
   furoAutomatedTime.lastWihdraw = BigInt.fromU32(0);
   furoAutomatedTime.save();
@@ -44,7 +47,7 @@ export function createFuroAutomatedAmount(event: CreateFuroAutomated): FuroAutom
   const decodedData = data.toTuple();
 
   let furoAutomatedAmount = new FuroAutomatedAmount(event.params.clone.toHex());
-  furoAutomatedAmount.furoAutomated = createFuroAutomated(event, decodedData, 'AMOUNT').id;
+  furoAutomatedAmount.furoAutomated = createFuroAutomated(event, decodedData, AutomationType.AMOUNT).id;
   furoAutomatedAmount.minAmount = decodedData[3].toBigInt();
   furoAutomatedAmount.save();
 
