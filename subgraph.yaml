@@ -8,6 +8,7 @@ dataSources:
     source:
       address: '0xEC18AdD9FBBA16E9eaC2f7577928537E7aAc7DfD'
       abi: FuroAutomatedTimeFactory
+      startBlock: 7838043
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
@@ -27,6 +28,7 @@ dataSources:
     source:
       address: '0x7ABC6f251ce41fc13F775E32D159FFF96A544E8A'
       abi: FuroAutomatedAmountFactory
+      startBlock: 7838114
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
