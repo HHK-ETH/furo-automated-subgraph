@@ -48,6 +48,7 @@ export function handleTaskUpdate(event: TaskUpdate): void {
 
   if (furoAutomated.type == AutomationType.TIME) {
     const data = ethereum.decode('(address, uint32, bool, bytes)', event.params.data)!.toTuple();
+    //ethereum.decode is not decoding correctly so some element are casted to BigInt first
     furoAutomated.withdrawTo = data[0].toAddress();
     furoAutomated.toBentoBox = data[2].toBigInt().isZero();
     furoAutomated.taskData = Bytes.fromHexString(data[3].toBigInt().toHex());
@@ -62,6 +63,7 @@ export function handleTaskUpdate(event: TaskUpdate): void {
   }
   if (furoAutomated.type == AutomationType.AMOUNT) {
     const data = ethereum.decode('(address, uint256, bool, bytes)', event.params.data)!.toTuple();
+    //ethereum.decode is not decoding correctly so some element are casted to BigInt first
     furoAutomated.withdrawTo = data[0].toAddress();
     furoAutomated.toBentoBox = data[2].toBigInt().isZero();
     furoAutomated.taskData = Bytes.fromHexString(data[3].toBigInt().toHex());

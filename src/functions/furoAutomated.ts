@@ -28,13 +28,12 @@ function createFuroAutomated(event: CreateFuroAutomated, data: ethereum.Tuple, t
 }
 
 export function createFuroAutomatedTime(event: CreateFuroAutomated): FuroAutomatedTime {
-  const data = ethereum.decode('(uint256, address, address, uint32, bool, bool, bytes)', event.params.data);
-  if (!data) throw 'Unable to decode data.';
-  const decodedData = data.toTuple();
+  const data = ethereum.decode('(uint256, address, address, uint32, bool, bool, bytes)', event.params.data)!.toTuple();
+  //ethereum.decode is not decoding correctly so some element are casted to BigInt first
 
   let furoAutomatedTime = new FuroAutomatedTime(event.params.clone.toHex());
-  furoAutomatedTime.furoAutomated = createFuroAutomated(event, decodedData, AutomationType.TIME).id;
-  furoAutomatedTime.withdrawPeriod = decodedData[3].toBigInt();
+  furoAutomatedTime.furoAutomated = createFuroAutomated(event, data, AutomationType.TIME).id;
+  furoAutomatedTime.withdrawPeriod = data[3].toBigInt();
   furoAutomatedTime.lastWihdraw = BigInt.fromU32(0);
   furoAutomatedTime.save();
 
@@ -42,13 +41,12 @@ export function createFuroAutomatedTime(event: CreateFuroAutomated): FuroAutomat
 }
 
 export function createFuroAutomatedAmount(event: CreateFuroAutomated): FuroAutomatedAmount {
-  const data = ethereum.decode('(uint256, address, address, uint256, bool, bool, bytes)', event.params.data);
-  if (!data) throw 'Unable to decode data.';
-  const decodedData = data.toTuple();
+  const data = ethereum.decode('(uint256, address, address, uint256, bool, bool, bytes)', event.params.data)!.toTuple();
+  //ethereum.decode is not decoding correctly so some element are casted to BigInt first
 
   let furoAutomatedAmount = new FuroAutomatedAmount(event.params.clone.toHex());
-  furoAutomatedAmount.furoAutomated = createFuroAutomated(event, decodedData, AutomationType.AMOUNT).id;
-  furoAutomatedAmount.minAmount = decodedData[3].toBigInt();
+  furoAutomatedAmount.furoAutomated = createFuroAutomated(event, data, AutomationType.AMOUNT).id;
+  furoAutomatedAmount.minAmount = data[3].toBigInt();
   furoAutomatedAmount.save();
 
   return furoAutomatedAmount;
